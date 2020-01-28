@@ -1,0 +1,54 @@
+name: JiroTravelersMap
+configs:
+  Debug: debug
+  Release: release
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: 13.2
+    SWIFT_VERSION: 5.0
+    DEVELOPMENT_TEAM: QQ9QE2K9VN
+targets:
+  JiroTravelersMap:
+    type: application
+    platform: iOS
+    sources: JiroTravelersMap
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.room417.JiroTravelersMap
+      config:
+        debug:
+          CODE_SIGN_STYLE: Automatic
+          ENABLE_PREVIEWS: true
+          DEVELOPMENT_ASSET_PATHS: JiroTravelersMap/Preview Content
+    info:
+      path: JiroTravelersMap/Info.plist
+      properties:
+        CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
+        LSRequiresIPhoneOS: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        UIRequiredDeviceCapabilities:
+          - armv7
+        UIStatusBarTintParameters:
+          UINavigationBar:
+            Style: UIBarStyleDefault
+            Translucent: false
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UILaunchStoryboardName: LaunchScreen
+    entitlements:
+      path: JiroTravelersMap/JiroTravelersMap.entitlements
+      properties: []
+        # com.apple.security.application-groups: group.jp.room417.JiroTravelersMap
+  JiroTravelersMapTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: JiroTravelersMapTests
+    settings:
+      INFOPLIST_FILE: JiroTravelersMapTests/Supporting Files/info.plist
+      CODE_SIGN_STYLE: Automatic
+      TEST_HOST: ${BUILT_PRODUCTS_DIR}/JiroTravelersMap.framework
+
