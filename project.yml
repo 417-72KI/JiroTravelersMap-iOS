@@ -23,9 +23,9 @@ targets:
         debug:
           CODE_SIGN_STYLE: Automatic
           ENABLE_PREVIEWS: true
-          DEVELOPMENT_ASSET_PATHS: JiroTravelersMap/Preview Content
+          DEVELOPMENT_ASSET_PATHS: JiroTravelersMap/Resources/Preview Content
     info:
-      path: JiroTravelersMap/Info.plist
+      path: JiroTravelersMap/Resources/Info.plist
       properties:
         CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
         LSRequiresIPhoneOS: true
@@ -44,7 +44,7 @@ targets:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UILaunchStoryboardName: LaunchScreen
     entitlements:
-      path: JiroTravelersMap/JiroTravelersMap.entitlements
+      path: JiroTravelersMap/Resources/JiroTravelersMap.entitlements
       properties: []
         # com.apple.security.application-groups: group.jp.room417.JiroTravelersMap
     preBuildScripts:
