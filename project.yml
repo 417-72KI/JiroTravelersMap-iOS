@@ -7,6 +7,10 @@ settings:
     IPHONEOS_DEPLOYMENT_TARGET: 13.2
     SWIFT_VERSION: 5.0
     DEVELOPMENT_TEAM: QQ9QE2K9VN
+packages:
+  Danger:
+    url: https://github.com/danger/swift.git
+    from: 3.0.0
 targets:
   JiroTravelersMap:
     type: application
