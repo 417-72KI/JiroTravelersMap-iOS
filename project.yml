@@ -11,11 +11,18 @@ packages:
   Danger:
     url: https://github.com/danger/swift.git
     from: 3.0.0
+  Rswift:
+    url: https://github.com/mac-cain13/R.swift.Library.git
+    from: 5.1.0
 targets:
   JiroTravelersMap:
     type: application
     platform: iOS
-    sources: JiroTravelersMap
+    sources: 
+      - JiroTravelersMap
+      - path: Libs/R.generated.swift
+        optional: true
+        createIntermediateGroups: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: jp.room417.JiroTravelersMap
@@ -47,9 +54,21 @@ targets:
       path: JiroTravelersMap/Resources/JiroTravelersMap.entitlements
       properties: []
         # com.apple.security.application-groups: group.jp.room417.JiroTravelersMap
+    dependencies:
+      - package: Rswift
     preBuildScripts:
       - name: Swiftlint
         script: mint run swiftlint
+      - name: R.swift
+        script: |
+          if mint list | grep -q 'R.swift'; then
+            mint run R.swift rswift generate "$SRCROOT/Libs/R.generated.swift"
+          else
+            echo "error: R.swift not installed; run 'mint bootstrap' to install"
+            return -1
+          fi
+        inputFiles: [$TEMP_DIR/rswift-lastrun]
+        outputFiles: [$SRCROOT/Libs/R.generated.swift]
   JiroTravelersMapTests:
     type: bundle.unit-test
     platform: iOS
