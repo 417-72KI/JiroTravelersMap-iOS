@@ -1,5 +1,7 @@
 included:
   - JiroTravelersMap
+excluded:
+  - Libs
 opt_in_rules:
   - anyobject_protocol
   - array_init
