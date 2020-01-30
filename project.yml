@@ -8,9 +8,6 @@ settings:
     SWIFT_VERSION: 5.0
     DEVELOPMENT_TEAM: QQ9QE2K9VN
 packages:
-  Danger:
-    url: https://github.com/danger/swift.git
-    from: 3.0.0
   Rswift:
     url: https://github.com/mac-cain13/R.swift.Library.git
     from: 5.1.0

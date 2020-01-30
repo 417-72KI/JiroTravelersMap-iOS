@@ -4,3 +4,4 @@ init:
 	@cp git-hooks/* .git/hooks
 xcode:
 	mint run yonaskolb/xcodegen xcodegen
+	open JiroTravelersMap.xcodeproj
