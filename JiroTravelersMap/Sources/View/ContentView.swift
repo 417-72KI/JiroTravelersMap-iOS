@@ -17,7 +17,7 @@ struct ContentView: View {
                 .tabItem {
                     VStack {
                         Image("ic_list")
-                        Text("Shop list")
+                        Text(R.string.content.shopList())
                     }
                 }
             .tag(0)
@@ -25,7 +25,7 @@ struct ContentView: View {
                 .tabItem {
                     VStack {
                         Image("ic_location")
-                        Text("Map")
+                        Text(R.string.content.map())
                     }
                 }
             .tag(1)
