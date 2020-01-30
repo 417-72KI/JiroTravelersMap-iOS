@@ -16,16 +16,16 @@ struct ContentView: View {
             ShopListView()
                 .tabItem {
                     VStack {
-                        Image("ic_list")
-                        Text(R.string.content.shopList())
+                        Image(R.image.ic_list)
+                        Text(R.string.content.shopList)
                     }
                 }
             .tag(0)
             MapView()
                 .tabItem {
                     VStack {
-                        Image("ic_location")
-                        Text(R.string.content.map())
+                        Image(R.image.ic_location)
+                        Text(R.string.content.map)
                     }
                 }
             .tag(1)
