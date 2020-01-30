@@ -69,12 +69,25 @@ targets:
           fi
         inputFiles: [$TEMP_DIR/rswift-lastrun]
         outputFiles: [$SRCROOT/Libs/R.generated.swift]
+    testTargets:
+      - JiroTravelersMapTests
   JiroTravelersMapTests:
     type: bundle.unit-test
     platform: iOS
     sources: JiroTravelersMapTests
     settings:
-      INFOPLIST_FILE: JiroTravelersMapTests/Supporting Files/info.plist
       CODE_SIGN_STYLE: Automatic
-      TEST_HOST: ${BUILT_PRODUCTS_DIR}/JiroTravelersMap.framework
-
+      TEST_HOST: $(BUILT_PRODUCTS_DIR)/JiroTravelersMap.app/JiroTravelersMap
+    info:
+      path: JiroTravelersMapTests/Info.plist
+      properties:
+        CFBundleDevelopmentRegion: $(DEVELOPMENT_LANGUAGE)
+        CFBundleExecutable: $(EXECUTABLE_NAME)
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundleInfoDictionaryVersion: 6.0
+        CFBundleName: $(PRODUCT_NAME)
+        CFBundlePackageType: BNDL
+        CFBundleShortVersionString: 1.0
+        CFBundleVersion: 1
+    dependencies:
+      - target: JiroTravelersMap
