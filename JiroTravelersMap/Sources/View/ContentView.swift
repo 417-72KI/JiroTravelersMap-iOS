@@ -24,7 +24,7 @@ struct ContentView: View {
             MapView()
                 .tabItem {
                     VStack {
-                        Image("ic_list")
+                        Image("ic_location")
                         Text("Map")
                     }
                 }
