@@ -1,6 +1,6 @@
 import Foundation
 
-enum Prefecture {
+enum Prefecture: String, Model {
     case hokkaido
     case aomori
     case iwate

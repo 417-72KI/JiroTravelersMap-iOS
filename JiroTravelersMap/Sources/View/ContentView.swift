@@ -13,7 +13,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selection) {
-            ShopListView()
+            ShopListView(shopList: [])
                 .tabItem {
                     VStack {
                         Image(R.image.ic_list)

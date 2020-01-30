@@ -8,15 +8,34 @@
 import SwiftUI
 
 struct ShopListView: View {
+    @State var shopList: [Shop]
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            VStack {
+                Divider()
+                List(shopList) { shop in
+                    Text(shop.name)
+                }
+            }
+        }
     }
 }
 
 #if DEBUG
 struct ShopListView_Previews: PreviewProvider {
     static var previews: some View {
-        ShopListView()
+        ShopListView(shopList: shopList)
+    }
+
+    static var shopList: [Shop] {
+        do {
+            let data = try Data(resource: R.file.shopListJson)
+            return try decoder.decode([Shop].self, from: data)
+        } catch {
+            print(error)
+            return []
+        }
     }
 }
 #endif
