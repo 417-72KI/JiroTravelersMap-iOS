@@ -5,3 +5,7 @@ init:
 xcode:
 	mint run yonaskolb/xcodegen xcodegen
 	open JiroTravelersMap.xcodeproj
+lint:
+	mint run swiftlint
+autocorrect:
+	mint run swiftlint swiftlint autocorrect
