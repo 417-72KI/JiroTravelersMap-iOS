@@ -11,9 +11,11 @@ import SwiftUI
 struct ContentView: View {
     @State private var selection = 0
 
+    @ObservedObject var viewModel: ContentViewModel
+
     var body: some View {
         TabView(selection: $selection) {
-            ShopListView(shopList: [])
+            ShopListView(shopList: viewModel.shopList)
                 .tabItem {
                     VStack {
                         Image(R.image.ic_list)
@@ -29,14 +31,14 @@ struct ContentView: View {
                     }
                 }
             .tag(1)
-        }
+        }.onAppear(perform: viewModel.fetch)
     }
 }
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: MockContentViewModel())
     }
 }
 #endif

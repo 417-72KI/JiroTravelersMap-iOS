@@ -122,8 +122,10 @@ disabled_rules:
   - file_types_order
   - force_unwrapping
   - function_default_parameter_at_end
+  - indentation_width
   - lower_acl_than_parent
   - missing_docs
+  - multiline_arguments_brackets
   - no_extension_access_modifier
   - no_grouping_extension
   - number_separator
@@ -136,6 +138,7 @@ disabled_rules:
   - strict_fileprivate
   - switch_case_on_newline
   - trailing_closure
+  - type_contents_order
   - unowned_variable_capture
   - unused_optional_binding
   - vertical_whitespace_between_cases

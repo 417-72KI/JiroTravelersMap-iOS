@@ -8,12 +8,15 @@ settings:
     SWIFT_VERSION: 5.0
     DEVELOPMENT_TEAM: QQ9QE2K9VN
 packages:
-  Rswift:
-    url: https://github.com/mac-cain13/R.swift.Library.git
-    from: 5.1.0
+  # APIKit:
+  #   url: https://github.com/ishkawa/APIKit.git
+  #   from: 5.1.0
   MockUserDefaults:
     url: https://github.com/417-72KI/MockUserDefaults.git
     from: 1.2.0
+  Rswift:
+    url: https://github.com/mac-cain13/R.swift.Library.git
+    from: 5.1.0
 targets:
   JiroTravelersMap:
     type: application
@@ -55,6 +58,7 @@ targets:
       properties: []
         # com.apple.security.application-groups: group.jp.room417.JiroTravelersMap
     dependencies:
+      # - package: APIKit
       - package: Rswift
     preBuildScripts:
       - name: Swiftlint
@@ -92,3 +96,4 @@ targets:
     dependencies:
       - target: JiroTravelersMap
       - package: MockUserDefaults
+  
