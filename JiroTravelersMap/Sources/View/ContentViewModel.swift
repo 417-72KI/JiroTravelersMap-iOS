@@ -21,21 +21,11 @@ class ContentViewModel: ObservableObject {
 final class MockContentViewModel: ContentViewModel {
     override init() {
         super.init()
-        shopList = mockShopList
+        shopList = Shop.mockList
     }
 
     override func fetch() {
         // no-op
-    }
-
-    private var mockShopList: [Shop] {
-        do {
-            let data = try Data(resource: R.file.shopListJson)
-            return try decoder.decode([Shop].self, from: data)
-        } catch {
-            print(error)
-            return []
-        }
     }
 }
 #endif

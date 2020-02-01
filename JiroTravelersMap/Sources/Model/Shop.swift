@@ -38,3 +38,18 @@ extension Shop.OpeningHours {
         let end: String
     }
 }
+
+// MARK: - Mock
+#if DEBUG
+extension Shop {
+    static var mockList: [Shop] {
+        do {
+            let data = try Data(resource: R.file.shopListJson)
+            return try decoder.decode([Shop].self, from: data)
+        } catch {
+            print(error)
+            return []
+        }
+    }
+}
+#endif

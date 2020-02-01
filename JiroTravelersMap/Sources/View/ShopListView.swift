@@ -25,17 +25,7 @@ struct ShopListView: View {
 #if DEBUG
 struct ShopListView_Previews: PreviewProvider {
     static var previews: some View {
-        ShopListView(shopList: shopList)
-    }
-
-    static var shopList: [Shop] {
-        do {
-            let data = try Data(resource: R.file.shopListJson)
-            return try decoder.decode([Shop].self, from: data)
-        } catch {
-            print(error)
-            return []
-        }
+        ShopListView(shopList: Shop.mockList)
     }
 }
 #endif

@@ -27,19 +27,9 @@ struct MixInShopRepository: ShopRepository {
 #if DEBUG
 struct MockShopRepository: ShopRepository {
     func fetchShopList() -> AnyPublisher<[Shop], AppError> {
-        Just<[Shop]>(shopList)
+        Just<[Shop]>(Shop.mockList)
             .setFailureType(to: AppError.self)
             .eraseToAnyPublisher()
-    }
-
-    private var shopList: [Shop] {
-        do {
-            let data = try Data(resource: R.file.shopListJson)
-            return try decoder.decode([Shop].self, from: data)
-        } catch {
-            print(error)
-            return []
-        }
     }
 }
 #endif
