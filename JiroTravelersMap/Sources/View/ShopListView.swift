@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ShopListView: View {
-    @State var shopList: [Shop]
+    var shopList: [Shop]
 
     var body: some View {
         NavigationView {
