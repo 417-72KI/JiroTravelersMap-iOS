@@ -23,7 +23,7 @@ struct ContentView: View {
                     }
                 }
             .tag(0)
-            MapView()
+            ShopMapView(shopList: viewModel.shopList)
                 .tabItem {
                     VStack {
                         Image(R.image.ic_location)
