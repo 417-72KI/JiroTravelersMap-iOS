@@ -12,7 +12,7 @@ struct ShopMapView: View {
 
     var body: some View {
         NavigationView {
-            MapView()
+            MapView(annotations: shopList.map(ShopAnnotation.init))
         }
     }
 }

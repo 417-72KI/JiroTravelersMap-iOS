@@ -5,14 +5,19 @@ struct MapView: UIViewRepresentable {
     typealias UIViewType = MKMapView
 
     @ObservedObject private var lm = LocationManager()
-    @State var annotations: [MKAnnotation] = []
+    var annotations: [MKAnnotation]
 
     func makeUIView(context: UIViewRepresentableContext<MapView>) -> MKMapView {
-        .init(frame: .zero)
+        let view = MKMapView(frame: .zero)
+        view.delegate = context.coordinator
+        return view
     }
 
     func updateUIView(_ mapView: MKMapView, context: UIViewRepresentableContext<MapView>) {
         mapView.showsUserLocation = true
+
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(annotations)
 
         if lm.isAuthorized,
             let location = lm.location {
@@ -21,12 +26,22 @@ struct MapView: UIViewRepresentable {
             mapView.setRegion(region, animated: true)
         }
     }
+
+    func makeCoordinator() -> Coordinator { .init() }
+}
+
+extension MapView {
+    class Coordinator: NSObject {
+    }
+}
+
+extension MapView.Coordinator: MKMapViewDelegate {
 }
 
 #if DEBUG
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView()
+        MapView(annotations: [])
     }
 }
 #endif
