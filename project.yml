@@ -53,6 +53,7 @@ targets:
             Translucent: false
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UILaunchStoryboardName: LaunchScreen
+        NSLocationWhenInUseUsageDescription: '現在地から近い店舗を取得できます'
     entitlements:
       path: JiroTravelersMap/Resources/JiroTravelersMap.entitlements
       properties: []
