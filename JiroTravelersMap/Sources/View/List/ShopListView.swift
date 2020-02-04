@@ -15,7 +15,9 @@ struct ShopListView: View {
             VStack {
                 Divider()
                 List(shopList) { shop in
-                    Text(shop.name)
+                    NavigationLink(destination: ShopDetailView(shop: shop)) {
+                        Text(shop.name)
+                    }
                 }
             }
         }
