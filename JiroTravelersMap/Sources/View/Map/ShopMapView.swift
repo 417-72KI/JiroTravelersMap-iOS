@@ -44,15 +44,22 @@ extension ShopMapView {
 }
 
 extension ShopMapView.Coordinator: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let annotation = view.annotation else { return }
-        print(annotation)
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotation") ?? {
+            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotation")
+            annotationView.canShowCallout = true
+            annotationView.rightCalloutAccessoryView = UIButton(type: .infoLight)
+            return annotationView
+            }()
+        return annotationView
     }
 
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let annotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotation")
-        annotation.canShowCallout = true
-        return annotation
+    func mapView(_ mapView: MKMapView,
+                 annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl) {
+        guard case view.rightCalloutAccessoryView = control,
+            let annotation = view.annotation as? ShopAnnotation else { return }
+        print(annotation)
     }
 }
 

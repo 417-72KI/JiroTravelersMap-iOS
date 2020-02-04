@@ -126,6 +126,7 @@ disabled_rules:
   - lower_acl_than_parent
   - missing_docs
   - multiline_arguments_brackets
+  - multiline_parameters_brackets
   - no_extension_access_modifier
   - no_grouping_extension
   - number_separator
