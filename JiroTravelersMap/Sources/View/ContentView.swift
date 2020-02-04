@@ -21,7 +21,7 @@ struct ContentView: View {
                         Image(R.image.ic_list)
                         Text(R.string.content.shopList)
                     }
-                }
+            }
             .tag(0)
             ShopMapView(shopList: viewModel.shopList)
                 .tabItem {
@@ -29,7 +29,7 @@ struct ContentView: View {
                         Image(R.image.ic_location)
                         Text(R.string.content.map)
                     }
-                }
+            }
             .tag(1)
         }.onAppear(perform: viewModel.fetch)
     }
