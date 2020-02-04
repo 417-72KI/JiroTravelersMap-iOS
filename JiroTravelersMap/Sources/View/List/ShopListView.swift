@@ -13,12 +13,17 @@ struct ShopListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Divider()
                 List(shopList) { shop in
                     NavigationLink(destination: ShopDetailView(shop: shop)) {
-                        Text(shop.name)
+                        VStack(alignment: .leading) {
+                            Text(shop.name)
+                                .font(.title)
+                            Text(shop.openingToday)
+                                .font(.body)
+                        }
                     }
                 }
+                .navigationBarTitle("店舗一覧", displayMode: .inline)
             }
         }
     }
