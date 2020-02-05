@@ -63,7 +63,9 @@ targets:
       - package: Rswift
     preBuildScripts:
       - name: Swiftlint
-        script: mint run swiftlint
+        script: |
+          mint run swiftlint swiftlint autocorrect
+          mint run swiftlint
       - name: R.swift
         script: |
           if mint list | grep -q 'R.swift'; then

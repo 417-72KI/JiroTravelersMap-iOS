@@ -10,10 +10,8 @@ struct MixInShopRepository: ShopRepository {
         URLSession.shared
             .dataTaskPublisher(for: shopListRequest)
             .tryMap { data, res -> Data in
-                guard let response = res as? HTTPURLResponse else {
-                    throw APIError.invalidResponse
-                }
-                if (200..<300).contains(response.statusCode) == false {
+                guard let response = res as? HTTPURLResponse else { throw APIError.invalidResponse }
+                guard (200..<300).contains(response.statusCode) else {
                     throw APIError.invalidResponseStatus(code: response.statusCode)
                 }
                 return data
