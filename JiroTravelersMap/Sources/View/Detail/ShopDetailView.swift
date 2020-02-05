@@ -12,6 +12,9 @@ struct ShopDetailView: View {
                 Text("定休日")
                 Text(shop.regularHoliday.shortStringValue)
                 Divider()
+                Text("営業時間")
+                Text(shop.openingHours.stringValue)
+                Divider()
             }
         }.navigationBarTitle(shop.name)
     }

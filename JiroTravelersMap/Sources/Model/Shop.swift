@@ -15,7 +15,7 @@ extension Shop {
     var openingToday: String {
         let today = openingHours.today
         if today.isEmpty { return "休" }
-        return today.map { $0.description }.joined(separator: "\n")
+        return today.stringValue()
     }
 }
 
@@ -63,6 +63,7 @@ extension Shop.OpeningHours {
     }
 }
 
+// MARK: -
 extension Shop.OpeningHours {
     struct Time: Model {
         let start: String
@@ -70,8 +71,42 @@ extension Shop.OpeningHours {
     }
 }
 
+extension Shop.OpeningHours.Time {
+    var stringValue: String { "\(start)~\(end)" }
+}
+
 extension Shop.OpeningHours.Time: CustomStringConvertible {
-    var description: String { "\(start)~\(end)" }
+    var description: String { stringValue }
+}
+
+extension Array where Element == Shop.OpeningHours.Time {
+    func stringValue(separator: String = "\n") -> String {
+        map { $0.description }
+            .joined(separator: separator)
+    }
+}
+
+// MARK: -
+extension Shop.OpeningHours {
+    var stringValue: String {
+        arrayValue.filter { !$1.isEmpty }
+            .map { ($0, $1.stringValue(separator: R.string.symbol.separator())) }
+            .map { "\($0): \($1)" }
+            .joined(separator: "\n")
+    }
+
+    var arrayValue: [(String, [Time])] {
+        [
+            (R.string.day.monday_short(), monday),
+            (R.string.day.tuesday_short(), tuesday),
+            (R.string.day.wednesday_short(), wednesday),
+            (R.string.day.thursday_short(), thursday),
+            (R.string.day.friday_short(), friday),
+            (R.string.day.saturday_short(), saturday),
+            (R.string.day.sunday_short(), sunday),
+            (R.string.day.holiday_short(), holiday)
+        ]
+    }
 }
 
 // MARK: - Mock
