@@ -9,6 +9,7 @@
             "lat": 35.64806,
             "lng": 139.7416326
         },
+        "regular_holiday": ["sunday", "holiday"],
         "opening_hours": {
             "monday": [
                 {"start": "08:30", "end": "15:00"},
@@ -48,6 +49,7 @@
             "lat": 35.6342079,
             "lng": 139.7071068
         },
+        "regular_holiday": ["wednesday"],
         "opening_hours": {
             "monday": [
                 {"start": "12:00", "end": "16:00"},

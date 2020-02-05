@@ -7,6 +7,7 @@ struct Shop: Model, Identifiable {
     let prefecture: Prefecture
     let address: String
     let location: Location
+    let regularHoliday: [Day]
     let openingHours: OpeningHours
 }
 

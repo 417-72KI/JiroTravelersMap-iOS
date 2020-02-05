@@ -137,6 +137,7 @@ disabled_rules:
   - sorted_imports
   - static_operator
   - strict_fileprivate
+  - switch_case_alignment
   - switch_case_on_newline
   - trailing_closure
   - type_contents_order

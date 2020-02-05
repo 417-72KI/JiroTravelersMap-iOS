@@ -8,7 +8,7 @@ protocol ShopRepository {
 struct MixInShopRepository: ShopRepository {
     func fetchShopList() -> AnyPublisher<[Shop], AppError> {
         URLSession.shared
-            .dataTaskPublisher(for: "https://jirotravelersmap.web.app/shop_list/origin.json")
+            .dataTaskPublisher(for: shopListRequest)
             .tryMap { data, res -> Data in
                 guard let response = res as? HTTPURLResponse else {
                     throw APIError.invalidResponse
@@ -18,9 +18,16 @@ struct MixInShopRepository: ShopRepository {
                 }
                 return data
             }
-            .decode(type: [Shop].self, decoder: decoder)
-            .mapError { $0.asAppError() }
-            .eraseToAnyPublisher()
+        .decode(type: [Shop].self, decoder: decoder)
+        .mapError { $0.asAppError() }
+        .eraseToAnyPublisher()
+    }
+}
+
+private extension MixInShopRepository {
+    var shopListRequest: URLRequest {
+        .init(url: "https://jirotravelersmap.web.app/shop_list/origin.json",
+              cachePolicy: .reloadIgnoringCacheData)
     }
 }
 
