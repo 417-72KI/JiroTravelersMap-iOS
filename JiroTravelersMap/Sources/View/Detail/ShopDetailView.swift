@@ -5,8 +5,18 @@ struct ShopDetailView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("住所")
-            Text(shop.address)
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("住所")
+                    Text(shop.address)
+                }
+                Spacer()
+                Button(action: {
+                    // TODO: Map View
+                },
+                       label: { Image(R.image.ic_map) }
+                )
+            }
             Divider()
             Text("定休日")
             Text(shop.regularHoliday.shortStringValue)
