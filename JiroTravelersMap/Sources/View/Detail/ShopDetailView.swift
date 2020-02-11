@@ -17,6 +17,11 @@ struct ShopDetailView: View {
                 Divider()
             }
         }.navigationBarTitle(shop.name)
+            .navigationBarItems(trailing:
+                Button(action: {
+                }) { Image(R.image.ic_create)
+                }
+        )
     }
 }
 
