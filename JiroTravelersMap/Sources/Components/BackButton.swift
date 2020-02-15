@@ -5,7 +5,7 @@ struct BackButton: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: { self.action() }) {
+        Button(action: action) {
             HStack {
                 Image(systemName: "chevron.left")
                 Text(label)
