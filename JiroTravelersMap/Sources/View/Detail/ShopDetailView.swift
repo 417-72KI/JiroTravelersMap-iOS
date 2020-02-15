@@ -6,6 +6,7 @@ struct ShopDetailView: View {
     @State private var showMap: Bool = false
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: 8) {
             NavigationLink(
                 destination: ShopMapView(shopList: [shop])
