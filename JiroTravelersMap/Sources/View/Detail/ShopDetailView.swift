@@ -3,6 +3,7 @@ import SwiftUI
 struct ShopDetailView: View {
     let shop: Shop
 
+    @State private var showRecord: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -25,11 +26,9 @@ struct ShopDetailView: View {
         }.padding(20)
             .navigationBarTitle(shop.name)
             .navigationBarItems(trailing:
-                Button(action: {
-                    // TODO: New memory view
-                },
-                       label: { Image(R.image.ic_create) }
-                )
+                Button(action: { self.showRecord = true },
+                       label: { Image(R.image.ic_create) })
+                    .sheet(isPresented: $showRecord) { RecordView(shop: self.shop) }
         )
     }
 }
