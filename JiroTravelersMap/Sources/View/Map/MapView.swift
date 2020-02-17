@@ -4,6 +4,7 @@ import MapKit
 
 struct MapView: UIViewRepresentable {
     var annotations: [MKAnnotation]
+    var selectedAnnotation: MKAnnotation?
 
     private let lm = LocationManager()
 
@@ -31,16 +32,28 @@ struct MapView: UIViewRepresentable {
 
     func makeCoordinator() -> Coordinator {
         let coordinator = Coordinator()
-
+        coordinator.selectedAnnotation = selectedAnnotation
         return coordinator
     }
 }
 
+// MARK: - Coordinator
 extension MapView {
     class Coordinator: NSObject {
+        var selectedAnnotation: MKAnnotation?
     }
 }
 
+// MARK: - Function
+extension MapView {
+    func selectFirst() -> some View {
+        var view = self
+        view.selectedAnnotation = annotations.first
+        return view
+    }
+}
+
+// MARK: - MKMapViewDelegate
 extension MapView.Coordinator: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotation") ?? {
@@ -58,6 +71,12 @@ extension MapView.Coordinator: MKMapViewDelegate {
         guard case view.rightCalloutAccessoryView = control,
             let annotation = view.annotation as? ShopAnnotation else { return }
         print(annotation)
+    }
+
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        if let selectedAnnotation = selectedAnnotation {
+            mapView.selectAnnotation(selectedAnnotation, animated: true)
+        }
     }
 }
 

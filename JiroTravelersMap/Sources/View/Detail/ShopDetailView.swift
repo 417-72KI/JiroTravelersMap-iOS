@@ -13,7 +13,7 @@ struct ShopDetailView: View {
                     Text(shop.address)
                 }
                 Spacer()
-                NavigationLink(destination: ShopMapView(shopList: [shop]),
+                NavigationLink(destination: ShopDetailMapView(shop: shop),
                                label: { Image(R.image.ic_map) })
             }
             Divider()
