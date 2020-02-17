@@ -38,3 +38,34 @@ final class CurrentValueRelay<Output>: Relay {
         subject.receive(subscriber: subscriber)
     }
 }
+
+// MARK: -
+extension Publisher where Self.Failure == Never {
+    func bind(to relays: CurrentValueRelay<Output>...) -> AnyCancellable {
+        bind(to: relays)
+    }
+
+    func bind(to relays: CurrentValueRelay<Output?>...) -> AnyCancellable {
+        map { $0 as Output? }.bind(to: relays)
+    }
+
+    private func bind(to relays: [CurrentValueRelay<Output>]) -> AnyCancellable {
+        sink { value in
+            relays.forEach { $0.accept(value) }
+        }
+    }
+
+    func bind(to relays: PassthroughRelay<Output>...) -> AnyCancellable {
+        bind(to: relays)
+    }
+
+    func bind(to relays: PassthroughRelay<Output?>...) -> AnyCancellable {
+        map { $0 as Output? }.bind(to: relays)
+    }
+
+    private func bind(to relays: [PassthroughRelay<Output>]) -> AnyCancellable {
+        sink { value in
+            relays.forEach { $0.accept(value) }
+        }
+    }
+}

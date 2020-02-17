@@ -6,6 +6,7 @@ struct MapView: UIViewRepresentable {
     var annotations: [MKAnnotation]
     var selectedAnnotation: MKAnnotation?
 
+    private let showInfoRelay: PassthroughRelay<MKAnnotation> = .init()
     private let lm = LocationManager()
 
     func makeUIView(context: UIViewRepresentableContext<MapView>) -> MKMapView {
@@ -33,6 +34,8 @@ struct MapView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         let coordinator = Coordinator()
         coordinator.selectedAnnotation = selectedAnnotation
+        coordinator.infoRelay.bind(to: showInfoRelay)
+            .store(in: &coordinator.cancellables)
         return coordinator
     }
 }
@@ -41,6 +44,9 @@ struct MapView: UIViewRepresentable {
 extension MapView {
     class Coordinator: NSObject {
         var selectedAnnotation: MKAnnotation?
+        fileprivate var infoRelay: PassthroughRelay<MKAnnotation> = .init()
+
+        fileprivate var cancellables: Set<AnyCancellable> = []
     }
 }
 
@@ -70,7 +76,7 @@ extension MapView.Coordinator: MKMapViewDelegate {
                  calloutAccessoryControlTapped control: UIControl) {
         guard case view.rightCalloutAccessoryView = control,
             let annotation = view.annotation as? ShopAnnotation else { return }
-        print(annotation)
+        infoRelay.accept(annotation)
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
