@@ -9,3 +9,6 @@ lint:
 	mint run swiftlint
 autocorrect:
 	mint run swiftlint swiftlint autocorrect
+
+clean:
+	git clean -Xfn
