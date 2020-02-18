@@ -4,9 +4,13 @@ import MapKit
 
 struct ShopMapView: View {
     var shopList: [Shop]
+    @State private var selectedAnnotation: MKAnnotation?
+    @State private var showInfo: Bool = false
 
     var body: some View {
-        MapView(annotations: shopList.map(ShopAnnotation.init))
+        MapView(annotations: shopList.map(ShopAnnotation.init),
+                selectedAnnotation: $selectedAnnotation,
+                showInfo: $showInfo)
     }
 }
 

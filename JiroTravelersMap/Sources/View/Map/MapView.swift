@@ -4,7 +4,8 @@ import MapKit
 
 struct MapView: UIViewRepresentable {
     var annotations: [MKAnnotation]
-    var selectedAnnotation: MKAnnotation?
+    @Binding var selectedAnnotation: MKAnnotation?
+    @Binding var showInfo: Bool
 
     private let showInfoRelay: PassthroughRelay<MKAnnotation> = .init()
     private let lm = LocationManager()
@@ -16,6 +17,8 @@ struct MapView: UIViewRepresentable {
     }
 
     func updateUIView(_ mapView: MKMapView, context: UIViewRepresentableContext<MapView>) {
+        mapView.delegate = context.coordinator
+
         mapView.showsUserLocation = true
 
         mapView.removeAnnotations(mapView.annotations)
@@ -32,30 +35,22 @@ struct MapView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        let coordinator = Coordinator()
-        coordinator.selectedAnnotation = selectedAnnotation
-        coordinator.infoRelay.bind(to: showInfoRelay)
-            .store(in: &coordinator.cancellables)
-        return coordinator
+        .init(selectedAnnotation: $selectedAnnotation,
+              showInfo: $showInfo)
     }
 }
 
 // MARK: - Coordinator
 extension MapView {
     class Coordinator: NSObject {
-        var selectedAnnotation: MKAnnotation?
-        fileprivate var infoRelay: PassthroughRelay<MKAnnotation> = .init()
+        @Binding var selectedAnnotation: MKAnnotation?
+        @Binding var showInfo: Bool
 
-        fileprivate var cancellables: Set<AnyCancellable> = []
-    }
-}
-
-// MARK: - Function
-extension MapView {
-    func selectFirst() -> some View {
-        var view = self
-        view.selectedAnnotation = annotations.first
-        return view
+        init(selectedAnnotation: Binding<MKAnnotation?>,
+             showInfo: Binding<Bool>) {
+            _selectedAnnotation = selectedAnnotation
+            _showInfo = showInfo
+        }
     }
 }
 
@@ -76,7 +71,6 @@ extension MapView.Coordinator: MKMapViewDelegate {
                  calloutAccessoryControlTapped control: UIControl) {
         guard case view.rightCalloutAccessoryView = control,
             let annotation = view.annotation as? ShopAnnotation else { return }
-        infoRelay.accept(annotation)
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
@@ -89,7 +83,9 @@ extension MapView.Coordinator: MKMapViewDelegate {
 #if DEBUG
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(annotations: Shop.mockList.map(ShopAnnotation.init))
+        MapView(annotations: Shop.mockList.map(ShopAnnotation.init),
+                selectedAnnotation: .constant(nil),
+                showInfo: .constant(false))
     }
 }
 #endif
