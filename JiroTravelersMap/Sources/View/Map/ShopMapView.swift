@@ -5,14 +5,27 @@ import MapKit
 struct ShopMapView: View {
     var shopList: [Shop]
     @State private var selectedAnnotation: MKAnnotation?
-    @State private var showInfo: Bool = false
+    @State private var detailView: AnyView?
+    @State private var tag: Int?
 
     var body: some View {
-        MapView(annotations: shopList.map(ShopAnnotation.init),
-                selectedAnnotation: $selectedAnnotation,
-                showInfo: $showInfo)
+        NavigationView {
+            VStack {
+                NavigationLink(destination: detailView, tag: showDetailTag, selection: $tag) {
+                    EmptyView()
+                }
+                MapView(annotations: shopList.map(ShopAnnotation.init),
+                        selectedAnnotation: $selectedAnnotation) {
+                            guard let annotation = $0 as? ShopAnnotation else { return }
+                            self.detailView = AnyView(ShopDetailView(shop: annotation.shop))
+                            self.tag = showDetailTag
+                }.navigationBarTitle("", displayMode: .inline)
+            }
+        }
     }
 }
+
+private let showDetailTag: Int = 999
 
 #if DEBUG
 struct ShopMapView_Previews: PreviewProvider {

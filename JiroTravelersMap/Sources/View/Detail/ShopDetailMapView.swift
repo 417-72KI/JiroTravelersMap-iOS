@@ -4,7 +4,6 @@ import MapKit
 struct ShopDetailMapView: View {
     private let shopAnnotation: ShopAnnotation
     @State private var selectedAnnotation: MKAnnotation?
-    @State private var showInfo: Bool = false
 
     init(shop: Shop) {
         self.shopAnnotation = .init(shop: shop)
@@ -12,8 +11,7 @@ struct ShopDetailMapView: View {
 
     var body: some View {
         MapView(annotations: [shopAnnotation],
-                selectedAnnotation: $selectedAnnotation,
-                showInfo: $showInfo)
+                selectedAnnotation: $selectedAnnotation)
             .onAppear { self.selectedAnnotation = self.shopAnnotation }
     }
 }

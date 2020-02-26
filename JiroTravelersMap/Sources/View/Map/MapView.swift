@@ -5,9 +5,16 @@ import MapKit
 struct MapView: UIViewRepresentable {
     var annotations: [MKAnnotation]
     @Binding var selectedAnnotation: MKAnnotation?
-    @Binding var showInfo: Bool
+    var infoAction: ((MKAnnotation) -> Void)?
 
-    private let showInfoRelay: PassthroughRelay<MKAnnotation> = .init()
+    init(annotations: [MKAnnotation],
+         selectedAnnotation: Binding<MKAnnotation?>,
+         infoAction: ((MKAnnotation) -> Void)? = nil) {
+        self.annotations = annotations
+        _selectedAnnotation = selectedAnnotation
+        self.infoAction = infoAction
+    }
+
     private let lm = LocationManager()
 
     func makeUIView(context: UIViewRepresentableContext<MapView>) -> MKMapView {
@@ -24,19 +31,12 @@ struct MapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(annotations)
 
-        if lm.isAuthorized,
-            let location = lm.location {
-            let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
-            let region = MKCoordinateRegion(center: location.coordinate, span: span)
-            mapView.setRegion(region, animated: true)
-        }
-
         mapView.showAnnotations(annotations, animated: true)
     }
 
     func makeCoordinator() -> Coordinator {
         .init(selectedAnnotation: $selectedAnnotation,
-              showInfo: $showInfo)
+              infoAction: infoAction)
     }
 }
 
@@ -44,12 +44,12 @@ struct MapView: UIViewRepresentable {
 extension MapView {
     class Coordinator: NSObject {
         @Binding var selectedAnnotation: MKAnnotation?
-        @Binding var showInfo: Bool
+        private var infoAction: ((MKAnnotation) -> Void)?
 
         init(selectedAnnotation: Binding<MKAnnotation?>,
-             showInfo: Binding<Bool>) {
+             infoAction: ((MKAnnotation) -> Void)?) {
             _selectedAnnotation = selectedAnnotation
-            _showInfo = showInfo
+            self.infoAction = infoAction
         }
     }
 }
@@ -57,10 +57,18 @@ extension MapView {
 // MARK: - MKMapViewDelegate
 extension MapView.Coordinator: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isEqual(mapView.userLocation) {
+            return nil
+        }
+
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotation") ?? {
             let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotation")
             annotationView.canShowCallout = true
-            annotationView.rightCalloutAccessoryView = UIButton(type: .infoLight)
+            if let _ = infoAction {
+                annotationView.rightCalloutAccessoryView = UIButton(type: .infoLight)
+            } else {
+                annotationView.rightCalloutAccessoryView = nil
+            }
             return annotationView
             }()
         return annotationView
@@ -70,13 +78,23 @@ extension MapView.Coordinator: MKMapViewDelegate {
                  annotationView view: MKAnnotationView,
                  calloutAccessoryControlTapped control: UIControl) {
         guard case view.rightCalloutAccessoryView = control,
-            let annotation = view.annotation as? ShopAnnotation else { return }
+            let annotation = view.annotation else { return }
+        infoAction?(annotation)
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         if let selectedAnnotation = selectedAnnotation {
             mapView.selectAnnotation(selectedAnnotation, animated: true)
         }
+    }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        // guard let annotation = view.annotation as? ShopAnnotation else { return }
+        // selectedAnnotation = annotation
+    }
+
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        // selectedAnnotation = nil
     }
 }
 
@@ -85,7 +103,7 @@ struct MapView_Previews: PreviewProvider {
     static var previews: some View {
         MapView(annotations: Shop.mockList.map(ShopAnnotation.init),
                 selectedAnnotation: .constant(nil),
-                showInfo: .constant(false))
+                infoAction: nil)
     }
 }
 #endif

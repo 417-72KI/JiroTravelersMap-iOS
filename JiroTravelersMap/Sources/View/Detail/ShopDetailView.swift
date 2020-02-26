@@ -24,7 +24,7 @@ struct ShopDetailView: View {
             Text(shop.openingHours.stringValue)
             Spacer()
         }.padding(20)
-            .navigationBarTitle(shop.name)
+            .navigationBarTitle(Text(shop.name), displayMode: .inline)
             .navigationBarItems(trailing:
                 Button(action: { self.showRecord = true },
                        label: { Image(R.image.ic_create) })
