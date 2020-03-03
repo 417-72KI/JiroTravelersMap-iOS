@@ -1,17 +1,32 @@
 import SwiftUI
 
 struct RecordView: View {
-    var shop: Shop?
+    @State var shop: Shop
+    var shopList: [Shop]
+    @State private var date = Date()
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            Form {
+                Picker(selection: $shop, label: Text("店舗")) {
+                    ForEach(shopList, id: \.self) {
+                        Text($0.name)
+                    }
+                }
+                DatePicker(selection: $date,
+                           in: ...Date(),
+                           displayedComponents: [.date, .hourAndMinute]) {
+                            Text("日付")
+                }
+            }.navigationBarTitle("行脚記録", displayMode: .inline)
+        }
     }
 }
 
 #if DEBUG
 struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
-        RecordView()
+        RecordView(shop: Shop.mockList[0], shopList: Shop.mockList)
     }
 }
 #endif

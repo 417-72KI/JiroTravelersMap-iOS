@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ShopDetailView: View {
     let shop: Shop
+    let shopList: [Shop]
 
     @State private var showRecord: Bool = false
 
@@ -28,7 +29,7 @@ struct ShopDetailView: View {
             .navigationBarItems(trailing:
                 Button(action: { self.showRecord = true },
                        label: { Image(R.image.ic_create) })
-                    .sheet(isPresented: $showRecord) { RecordView(shop: self.shop) }
+                    .sheet(isPresented: $showRecord) { RecordView(shop: self.shop, shopList: self.shopList) }
         )
     }
 }
@@ -36,7 +37,7 @@ struct ShopDetailView: View {
 #if DEBUG
 struct ShopDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ShopDetailView(shop: Shop.mockList[0])
+        ShopDetailView(shop: Shop.mockList[0], shopList: Shop.mockList)
     }
 }
 #endif

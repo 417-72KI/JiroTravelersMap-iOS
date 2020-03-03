@@ -14,7 +14,7 @@ struct ShopListView: View {
         NavigationView {
             VStack {
                 List(shopList) { shop in
-                    NavigationLink(destination: ShopDetailView(shop: shop)) {
+                    NavigationLink(destination: ShopDetailView(shop: shop, shopList: self.shopList)) {
                         VStack(alignment: .leading) {
                             Text(shop.name)
                                 .font(.title)

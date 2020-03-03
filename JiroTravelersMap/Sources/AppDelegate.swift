@@ -12,7 +12,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next discouraged_optional_collection line_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         // See: https://stackoverflow.com/questions/56498045/remove-extra-separators-below-list-in-swiftui
         UITableView.appearance().tableFooterView = UIView()
         return true
