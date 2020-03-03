@@ -23,7 +23,7 @@ struct ShopListView: View {
                         }
                     }
                 }
-                .navigationBarTitle("店舗一覧", displayMode: .inline)
+                .navigationBarTitle(R.string.content.shopList, displayMode: .inline)
             }
         }
     }

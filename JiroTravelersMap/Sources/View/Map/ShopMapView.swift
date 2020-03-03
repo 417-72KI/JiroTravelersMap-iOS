@@ -19,7 +19,7 @@ struct ShopMapView: View {
                             guard let annotation = $0 as? ShopAnnotation else { return }
                             self.detailView = AnyView(ShopDetailView(shop: annotation.shop))
                             self.tag = showDetailTag
-                }.navigationBarTitle("", displayMode: .inline)
+                }.navigationBarTitle(R.string.content.map, displayMode: .inline)
             }
         }
     }
