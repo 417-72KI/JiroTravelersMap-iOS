@@ -4,7 +4,9 @@ struct RecordView: View {
     @ObservedObject private var viewModel: RecordViewModel
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         NavigationView {
+            // swiftlint:disable:next closure_body_length
             Form {
                 Picker(selection: $viewModel.form.shop, label: Text("店舗")) {
                     ForEach(viewModel.shopList, id: \.self) {
