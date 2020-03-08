@@ -1,19 +1,17 @@
 import SwiftUI
 
 struct RecordView: View {
-    @State var shop: Shop
-    var shopList: [Shop]
-    @State private var date = Date()
+    @ObservedObject private var viewModel: RecordViewModel
 
     var body: some View {
         NavigationView {
             Form {
-                Picker(selection: $shop, label: Text("店舗")) {
-                    ForEach(shopList, id: \.self) {
+                Picker(selection: $viewModel.form.shop, label: Text("店舗")) {
+                    ForEach(viewModel.shopList, id: \.self) {
                         Text($0.name)
                     }
                 }
-                DatePicker(selection: $date,
+                DatePicker(selection: $viewModel.form.date,
                            in: ...Date(),
                            displayedComponents: [.date, .hourAndMinute]) {
                             Text("日付")
@@ -26,9 +24,15 @@ struct RecordView: View {
     }
 }
 
+extension RecordView {
+    init(shop: Shop, shopList: [Shop]) {
+        viewModel = RecordViewModel(shop: shop, shopList: shopList)
+    }
+}
+
 private extension RecordView {
     func submit() {
-        print(shop)
+        print(viewModel.form)
     }
 }
 
