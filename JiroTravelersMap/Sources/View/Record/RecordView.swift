@@ -19,7 +19,16 @@ struct RecordView: View {
                             Text("日付")
                 }
             }.navigationBarTitle("行脚記録", displayMode: .inline)
+                .navigationBarItems(
+                    trailing: Button(action: { self.submit() },
+                                     label: { Text("記録する") }))
         }
+    }
+}
+
+private extension RecordView {
+    func submit() {
+        print(shop)
     }
 }
 
