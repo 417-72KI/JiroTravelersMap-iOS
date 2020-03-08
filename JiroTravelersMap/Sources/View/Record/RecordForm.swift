@@ -9,6 +9,7 @@ struct RecordForm {
     var garlic: Topping = .none
     var oil: Topping = .normal
     var taste: Taste = .normal
+    var comment: String = ""
 }
 
 // MARK: -

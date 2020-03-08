@@ -48,6 +48,7 @@ struct RecordView: View {
                         Text($0.label)
                     }
                 }
+                TextField("コメント", text: $viewModel.form.comment)
             }.navigationBarTitle("行脚記録", displayMode: .inline)
                 .navigationBarItems(
                     trailing: Button(action: { self.submit() },
