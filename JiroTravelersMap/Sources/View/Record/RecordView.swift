@@ -16,17 +16,14 @@ struct RecordView: View {
                            displayedComponents: [.date, .hourAndMinute]) {
                             Text("日付")
                 }
-                Picker(selection: $viewModel.form.size, label: Text("サイズ")) {
-                    ForEach(RecordForm.Size.allCases, id: \.self) {
+                Picker(selection: $viewModel.form.noodleType, label: Text("種類")) {
+                    ForEach(RecordForm.NoodleType.allCases, id: \.self) {
                         Text($0.label)
                     }
                 }
-                HStack {
-                    Text("汁なし")
-                    Spacer()
-
-                    Button(action: { self.viewModel.form.isSoupless.toggle() }) {
-                        Image(systemName: self.viewModel.form.isSoupless ? "checkmark.square" : "square")
+                Picker(selection: $viewModel.form.size, label: Text("サイズ")) {
+                    ForEach(RecordForm.Size.allCases, id: \.self) {
+                        Text($0.label)
                     }
                 }
             }.navigationBarTitle("行脚記録", displayMode: .inline)

@@ -3,10 +3,33 @@ import Foundation
 struct RecordForm {
     var shop: Shop
     var date: Date = .init()
+    var noodleType: NoodleType = .ramen
     var size: Size = .small
-    var isSoupless: Bool = false
 }
 
+// MARK: -
+extension RecordForm {
+    enum NoodleType: CaseIterable {
+        case ramen
+        case soupless
+        case tsukemen
+    }
+}
+
+extension RecordForm.NoodleType {
+    var label: String {
+        switch self {
+        case .ramen:
+            return R.string.noodleType.ramen()
+        case .soupless:
+            return R.string.noodleType.soupless()
+        case .tsukemen:
+            return R.string.noodleType.tsukemen()
+        }
+    }
+}
+
+// MARK: -
 extension RecordForm {
     enum Size: CaseIterable {
         case mini
