@@ -16,6 +16,11 @@ struct RecordView: View {
                            displayedComponents: [.date, .hourAndMinute]) {
                             Text("日付")
                 }
+                Picker(selection: $viewModel.form.size, label: Text("サイズ")) {
+                    ForEach(RecordForm.Size.allCases, id: \.self) {
+                        Text($0.label)
+                    }
+                }
             }.navigationBarTitle("行脚記録", displayMode: .inline)
                 .navigationBarItems(
                     trailing: Button(action: { self.submit() },
