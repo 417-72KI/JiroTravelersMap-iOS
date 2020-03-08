@@ -21,6 +21,14 @@ struct RecordView: View {
                         Text($0.label)
                     }
                 }
+                HStack {
+                    Text("汁なし")
+                    Spacer()
+
+                    Button(action: { self.viewModel.form.isSoupless.toggle() }) {
+                        Image(systemName: self.viewModel.form.isSoupless ? "checkmark.square" : "square")
+                    }
+                }
             }.navigationBarTitle("行脚記録", displayMode: .inline)
                 .navigationBarItems(
                     trailing: Button(action: { self.submit() },

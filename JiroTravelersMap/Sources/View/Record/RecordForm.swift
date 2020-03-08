@@ -4,6 +4,7 @@ struct RecordForm {
     var shop: Shop
     var date: Date = .init()
     var size: Size = .small
+    var isSoupless: Bool = false
 }
 
 extension RecordForm {
