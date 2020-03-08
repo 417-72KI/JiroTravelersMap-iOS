@@ -26,6 +26,28 @@ struct RecordView: View {
                         Text($0.label)
                     }
                 }
+                VStack {
+                    HStack {
+                        Text("ヤサイ")
+                        Spacer()
+                    }
+                    Picker(selection: $viewModel.form.veges, label: Text("")) {
+                        ForEach(RecordForm.Topping.allCases, id: \.self) {
+                            Text($0.label)
+                        }
+                    }.labelsHidden()
+                }.pickerStyle(SegmentedPickerStyle())
+                VStack {
+                    HStack {
+                        Text("ニンニク")
+                        Spacer()
+                    }
+                    Picker(selection: $viewModel.form.garlic, label: Text("")) {
+                        ForEach(RecordForm.Topping.allCases, id: \.self) {
+                            Text($0.label)
+                        }
+                    }.labelsHidden()
+                }.pickerStyle(SegmentedPickerStyle())
             }.navigationBarTitle("行脚記録", displayMode: .inline)
                 .navigationBarItems(
                     trailing: Button(action: { self.submit() },
