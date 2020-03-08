@@ -26,28 +26,26 @@ struct RecordView: View {
                         Text($0.label)
                     }
                 }
-                VStack {
-                    HStack {
-                        Text("ヤサイ")
-                        Spacer()
+                SegmentedSelectionList(selection: $viewModel.form.veges, label: Text("ヤサイ")) {
+                    ForEach(RecordForm.Topping.allCases, id: \.self) {
+                        Text($0.label)
                     }
-                    Picker(selection: $viewModel.form.veges, label: Text("")) {
-                        ForEach(RecordForm.Topping.allCases, id: \.self) {
-                            Text($0.label)
-                        }
-                    }.labelsHidden()
-                }.pickerStyle(SegmentedPickerStyle())
-                VStack {
-                    HStack {
-                        Text("ニンニク")
-                        Spacer()
+                }
+                SegmentedSelectionList(selection: $viewModel.form.garlic, label: Text("ニンニク")) {
+                    ForEach(RecordForm.Topping.allCases, id: \.self) {
+                        Text($0.label)
                     }
-                    Picker(selection: $viewModel.form.garlic, label: Text("")) {
-                        ForEach(RecordForm.Topping.allCases, id: \.self) {
-                            Text($0.label)
-                        }
-                    }.labelsHidden()
-                }.pickerStyle(SegmentedPickerStyle())
+                }
+                SegmentedSelectionList(selection: $viewModel.form.oil, label: Text("アブラ")) {
+                    ForEach(RecordForm.Topping.allCases, id: \.self) {
+                        Text($0.label)
+                    }
+                }
+                SegmentedSelectionList(selection: $viewModel.form.taste, label: Text("味")) {
+                    ForEach(RecordForm.Taste.allCases, id: \.self) {
+                        Text($0.label)
+                    }
+                }
             }.navigationBarTitle("行脚記録", displayMode: .inline)
                 .navigationBarItems(
                     trailing: Button(action: { self.submit() },
