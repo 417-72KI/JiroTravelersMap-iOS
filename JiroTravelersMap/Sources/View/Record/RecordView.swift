@@ -48,11 +48,23 @@ struct RecordView: View {
                         Text($0.label)
                     }
                 }
-                TextField("コメント", text: $viewModel.form.comment)
+                // TODO: implement when TextField bugs around Japanese resolved.
+                // TextField("コメント",
+                //           text: $viewModel.form.comment,
+                //           onEditingChanged: {
+                //             print($0)
+                //             print(self.viewModel.form.comment)
+                // })
+                Toggle(isOn: $viewModel.form.tweet) {
+                    Text("ツイートする")
+                }
             }.navigationBarTitle("行脚記録", displayMode: .inline)
                 .navigationBarItems(
                     trailing: Button(action: { self.submit() },
                                      label: { Text("記録する") }))
+        }.onAppear {
+            UITableView.appearance()
+                .tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: Double.leastNonzeroMagnitude))
         }
     }
 }

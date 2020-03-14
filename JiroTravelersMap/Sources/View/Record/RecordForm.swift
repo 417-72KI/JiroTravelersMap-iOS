@@ -10,6 +10,7 @@ struct RecordForm {
     var oil: Topping = .normal
     var taste: Taste = .normal
     var comment: String = ""
+    var tweet: Bool = false
 }
 
 // MARK: -
