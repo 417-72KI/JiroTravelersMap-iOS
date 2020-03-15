@@ -5,6 +5,7 @@ struct RecordForm {
     var date: Date = .init()
     var noodleType: NoodleType = .ramen
     var size: Size = .small
+    var options: [Option] = []
     var veges: Topping = .normal
     var garlic: Topping = .none
     var oil: Topping = .normal
@@ -103,6 +104,19 @@ extension RecordForm.Taste {
             return "カラメ"
         case .double:
             return "カラカラ"
+        }
+    }
+}
+
+// MARK: -
+extension RecordForm {
+    struct Option: MultipleSelectable {
+        var id: Date
+        var label: String
+
+        init(label: String) {
+            id = Date()
+            self.label = label
         }
     }
 }

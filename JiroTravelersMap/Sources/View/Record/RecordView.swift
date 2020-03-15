@@ -26,6 +26,9 @@ struct RecordView: View {
                         Text($0.label)
                     }
                 }
+                MultipleSelectionList(selection: $viewModel.form.options,
+                                      items: $viewModel.options,
+                                      label: Text("有料トッピング"))
                 SegmentedSelectionList(selection: $viewModel.form.veges, label: Text("ヤサイ")) {
                     ForEach(RecordForm.Topping.allCases, id: \.self) {
                         Text($0.label)
