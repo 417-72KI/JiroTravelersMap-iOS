@@ -111,6 +111,7 @@ opt_in_rules:
   - xct_specific_matcher
   - yoda_condition
 disabled_rules:
+  - closure_body_length
   - conditional_returns_on_newline
   - explicit_acl
   - explicit_enum_raw_value
