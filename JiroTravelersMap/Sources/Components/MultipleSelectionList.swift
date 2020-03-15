@@ -35,8 +35,8 @@ struct MultipleSelectionList<SelectionValue>: View where SelectionValue: Multipl
                         .foregroundColor(Color(UIColor.systemGray))
                         .font(.body)
                     Image(systemName: "chevron.right")
-                        .foregroundColor(Color(UIColor.systemGray4))
-                        .font(Font.body.weight(.medium))
+                        .foregroundColor(Color(UIColor.placeholderText))
+                        .font(Font.footnote.weight(.bold))
                 }
             }.sheet(isPresented: $sheetPresenting) {
                 SelectionView(label: self.label,
@@ -88,6 +88,7 @@ private extension MultipleSelectionList {
                                   text: $newItem,
                                   onEditingChanged: {
                                     if $0 { return }
+                                    if self.newItem.isEmpty { return }
                                     let newValue = SelectionValue(label: self.newItem)
                                     self.items.append(newValue)
                                     self.selections.append(newValue)
@@ -95,15 +96,15 @@ private extension MultipleSelectionList {
                         })
                     }
                 }
-                    .listStyle(GroupedListStyle())
-                    .navigationBarTitle(label, displayMode: .inline)
-                    .navigationBarItems(trailing:
-                        Button(action: {
-                            self.onCommit()
-                            self.presentationMode.wrappedValue.dismiss()
-                        }, label: {
-                            Text("OK")
-                        })
+                .listStyle(GroupedListStyle())
+                .navigationBarTitle(label, displayMode: .inline)
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.onCommit()
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("OK")
+                    })
                 )
             }
         }
