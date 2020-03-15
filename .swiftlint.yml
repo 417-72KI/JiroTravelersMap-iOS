@@ -151,4 +151,4 @@ nesting:
   type_level: 3
 line_length:
   ignores_comments: true
-  # warning: 150
+  warning: 140
