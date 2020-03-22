@@ -9,6 +9,6 @@ final class ShopAnnotation: NSObject, MKAnnotation {
     }
 
     var coordinate: CLLocationCoordinate2D { shop.location.coordinate }
-    var title: String? { shop.name }
+    var title: String? { shop.nameWithStatus }
     var subtitle: String? { shop.address }
 }

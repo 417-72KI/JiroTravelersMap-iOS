@@ -4,6 +4,7 @@ struct Shop: Model, Identifiable {
     let id: Int
     let kind: Kind
     let name: String
+    let status: Status
     let prefecture: Prefecture
     let address: String
     let location: Location
@@ -17,6 +18,17 @@ extension Shop {
         if today.isEmpty { return "休" }
         return today.stringValue()
     }
+
+    var nameWithStatus: String {
+        switch status {
+        case .closed:
+            return "\(name)(閉店)"
+        case .beforeOpen:
+            return "\(name)(まもなくオープン)"
+        default:
+            return name
+        }
+    }
 }
 
 // MARK: -
@@ -24,6 +36,15 @@ extension Shop {
     enum Kind: String, Model {
         case origin
         case inspired
+    }
+}
+
+// MARK: -
+extension Shop {
+    enum Status: String, Model {
+        case open
+        case closed
+        case beforeOpen = "before_open"
     }
 }
 
