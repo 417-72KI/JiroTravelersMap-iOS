@@ -27,26 +27,30 @@ struct ShopListView: View {
                         }
                     }
                     .navigationBarTitle(R.string.content.shopList, displayMode: .inline)
-                    .navigationBarItems(leading: Button(
+                    .navigationBarItems(trailing: Button(
                         action: {
                             withAnimation {
                                 self.sharedState.showMenu.toggle()
                             }
                         },
                         label: {
-                            Image(systemName: "line.horizontal.3")
+                            Image(systemName: "briefcase")
                                 .imageScale(.large)
                         })
                     )
                 }
                 .frame(width: geometry.size.width,
                        height: geometry.size.height)
-                    .offset(x: self.sharedState.showMenu ? geometry.size.width / 2 : 0)
+                    .offset(x: self.sharedState.showMenu ? -geometry.size.width / 2 : 0)
                 if self.sharedState.showMenu {
-                    SideMenuView()
-                        .environmentObject(self.sharedState)
-                        .frame(width: geometry.size.width / 2)
-                        .transition(.move(edge: .leading))
+                    HStack {
+                        Spacer()
+                        SideMenuView()
+                            .environmentObject(self.sharedState)
+                            .frame(width: geometry.size.width / 2,
+                                   alignment: .trailing)
+                    }
+                    .transition(.move(edge: .trailing))
                 }
             }
         }

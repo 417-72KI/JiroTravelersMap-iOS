@@ -15,7 +15,6 @@ struct SideMenuView: View {
             Spacer()
         }
         .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(red: 32 / 255, green: 32 / 255, blue: 32 / 255))
         .edgesIgnoringSafeArea(.all)
     }
