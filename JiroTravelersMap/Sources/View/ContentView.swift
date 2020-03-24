@@ -10,28 +10,44 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selection = 0
-
+    @EnvironmentObject var sharedState: SharedState
     @ObservedObject var viewModel: ContentViewModel
 
     var body: some View {
-        TabView(selection: $selection) {
-            ShopListView(shopList: viewModel.shopList)
-                .tabItem {
-                    VStack {
-                        Image(R.image.ic_list)
-                        Text(R.string.content.shopList)
+        ZStack {
+            TabView(selection: self.$selection) {
+                ShopListView(shopList: self.filteredShopList)
+                    .tabItem {
+                        VStack {
+                            Image(R.image.ic_list)
+                            Text(R.string.content.shopList)
+                        }
                     }
-                }
-            .tag(0)
-            ShopMapView(shopList: viewModel.shopList)
-                .tabItem {
-                    VStack {
-                        Image(R.image.ic_location)
-                        Text(R.string.content.map)
+                .environmentObject(self.sharedState)
+                .tag(0)
+                ShopMapView(shopList: self.filteredShopList)
+                    .tabItem {
+                        VStack {
+                            Image(R.image.ic_location)
+                            Text(R.string.content.map)
+                        }
                     }
-                }
-            .tag(1)
+                .environmentObject(self.sharedState)
+                .tag(1)
+            }
         }.onAppear(perform: viewModel.fetch)
+    }
+}
+
+// MARK: -
+private extension ContentView {
+    var filteredShopList: [Shop] {
+        viewModel.shopList.lazy
+            .filter {
+                sharedState.displayOnlyOpeningShops
+                    ? $0.isOpening(on: Date())
+                    : true
+            }
     }
 }
 
@@ -39,6 +55,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(viewModel: MockContentViewModel())
+            .environmentObject(SharedState())
     }
 }
 #endif

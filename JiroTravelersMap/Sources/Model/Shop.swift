@@ -12,6 +12,7 @@ struct Shop: Model, Identifiable {
     let openingHours: OpeningHours
 }
 
+// MARK: -
 extension Shop {
     var openingToday: String {
         let today = openingHours.today
@@ -28,6 +29,16 @@ extension Shop {
         default:
             return name
         }
+    }
+}
+
+// MARK: -
+extension Shop {
+    func isOpening(on date: Date) -> Bool {
+        let dateRange = openingHours.forDate(date)
+            .map { $0.dateRange(on: date) }
+        if dateRange.isEmpty { return false }
+        return dateRange.contains(where: { $0.contains(date) })
     }
 }
 
@@ -68,8 +79,6 @@ extension Shop.OpeningHours {
 
 extension Shop.OpeningHours {
     func forDate(_ date: Date) -> [Time] {
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(identifier: "Asia/Tokyo")!
         let comp = calendar.dateComponents([.weekday], from: date)
         switch comp.weekday {
         case 1: return sunday
@@ -94,6 +103,40 @@ extension Shop.OpeningHours {
 
 extension Shop.OpeningHours.Time {
     var stringValue: String { "\(start)~\(end)" }
+}
+
+private extension Shop.OpeningHours.Time {
+    var dateFormatter: DateFormatter {
+        DateFormatter().apply {
+            $0.dateFormat = "HH:mm"
+        }
+    }
+}
+
+extension Shop.OpeningHours.Time {
+    func dateRange(on date: Date) -> Range<Date> {
+        startAsDate(on: date)..<endAsDate(on: date)
+    }
+}
+
+private extension Shop.OpeningHours.Time {
+    func startAsDate(on date: Date) -> Date {
+        parse(start, date: date)
+    }
+
+    func endAsDate(on date: Date) -> Date {
+        parse(end, date: date)
+    }
+
+    func parse(_ string: String, date: Date) -> Date {
+        guard let hour = Int(string.prefix(2)),
+            let minute = Int(string.suffix(2)) else { fatalError("Invalid format: \(string)") }
+        var comp = calendar.dateComponents([.calendar, .year, .month, .day], from: date)
+        comp.hour = hour
+        comp.minute = minute
+        comp.second = 0
+        return comp.date!
+    }
 }
 
 extension Shop.OpeningHours.Time: CustomStringConvertible {
