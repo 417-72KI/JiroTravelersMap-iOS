@@ -7,7 +7,7 @@ struct SideMenuView: View {
     var body: some View {
         VStack {
             Toggle(isOn: $sharedState.displayOnlyOpeningShops) {
-                Text("開店中のみ")
+                Text(R.string.menu.onlyOpen)
                     .foregroundColor(.gray)
                     .font(.headline)
             }
