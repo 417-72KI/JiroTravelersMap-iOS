@@ -51,7 +51,23 @@ struct ShopListView: View {
                 .transition(.move(edge: .trailing))
                 .offset(x: self.sharedState.showMenu ? 0 : geometry.size.width / 2)
             }
-        }
+        }.gesture(
+            DragGesture()
+                .onEnded {
+                    switch $0.translation.width {
+                    case ..<(-100):
+                        withAnimation {
+                            self.sharedState.showMenu = true
+                        }
+                    case 100...:
+                        withAnimation {
+                            self.sharedState.showMenu = false
+                        }
+                    default:
+                        break
+                    }
+                }
+        )
     }
 }
 
