@@ -17,6 +17,14 @@ struct SideMenuView: View {
                 }
                 .padding(.top, 100)
                 Divider()
+                SegmentedSelectionList(selection: $sharedState.shopSortOrder,
+                                       label: Text(R.string.menu.sortOrder)
+                                        .foregroundColor(Color(UIColor.label))
+                                        .font(.headline)) {
+                                            ForEach(Shop.SortOrder.allCases, id: \.self) {
+                                                Text($0.label)
+                                            }
+                }
                 Spacer()
             }
             .padding()
@@ -24,5 +32,9 @@ struct SideMenuView: View {
         .compositingGroup()
         .border(Color.gray, width: 1)
         .edgesIgnoringSafeArea(.all)
+        .alert(isPresented: $sharedState.showLocationError) {
+            Alert(title: Text(R.string.alert.gps_on),
+                  dismissButton: .default(Text(R.string.alert.ok)) { self.sharedState.shopSortOrder = .id })
+        }
     }
 }

@@ -175,9 +175,20 @@ extension Shop.OpeningHours {
 
 // MARK: -
 extension Shop {
-    enum SortOrder {
+    enum SortOrder: CaseIterable {
         case id
         case distance
+    }
+}
+
+extension Shop.SortOrder {
+    var label: String {
+        switch self {
+        case .id:
+            return R.string.sortOrder.shop_id()
+        case .distance:
+            return R.string.sortOrder.distance()
+        }
     }
 }
 
