@@ -7,9 +7,9 @@ extension Sequence {
 
     public func sorted<T: Comparable>(by keyPath: KeyPath<Element, T?>) -> [Element] {
         sorted {
-            guard let l = $0[keyPath: keyPath],
-                let r = $1[keyPath: keyPath] else { return false }
-            return l < r
+            guard let lValue = $0[keyPath: keyPath],
+                let rValue = $1[keyPath: keyPath] else { return false }
+            return lValue < rValue
         }
     }
 }

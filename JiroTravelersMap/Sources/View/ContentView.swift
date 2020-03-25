@@ -43,11 +43,7 @@ struct ContentView: View {
 private extension ContentView {
     var filteredShopList: [Shop] {
         viewModel.shopList.lazy
-            .filter { [sharedState] in
-                sharedState.displayOnlyOpeningShops
-                    ? $0.isOpening(on: Date())
-                    : true
-            }
+            .filter { [sharedState] in sharedState.displayOnlyOpeningShops ? $0.isOpening(on: Date()) : true }
             .sorted(by: sharedState.shopSortOrder, location: sharedState.location)
     }
 }

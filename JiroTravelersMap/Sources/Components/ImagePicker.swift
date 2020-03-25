@@ -30,7 +30,8 @@ extension ImagePicker {
             _image = image
         }
 
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        func imagePickerController(_ picker: UIImagePickerController,
+                                   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             defer { picker.dismiss(animated: true) }
 
             image = info[.originalImage] as? UIImage
