@@ -18,11 +18,17 @@ struct ShopListView: View {
                 VStack {
                     List(self.shopList) { shop in
                         NavigationLink(destination: ShopDetailView(shop: shop, shopList: self.shopList)) {
-                            VStack(alignment: .leading) {
-                                Text(shop.nameWithStatus)
-                                    .font(.title)
-                                Text(shop.openingToday)
-                                    .font(.body)
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(shop.nameWithStatus)
+                                        .font(.title)
+                                    Text(shop.openingToday)
+                                        .font(.body)
+                                }
+                                Spacer()
+                                self.sharedState.location
+                                    .flatMap(shop.location.distance)
+                                    .flatMap { Text(String(format: "%.2f km", $0 / 1000)) }
                             }
                         }
                     }

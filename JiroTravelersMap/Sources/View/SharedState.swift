@@ -7,7 +7,10 @@ final class SharedState: ObservableObject {
     @Published var showLocationError = false
     @Published var shopSortOrder: Shop.SortOrder = .id {
         didSet {
-            guard case .distance = shopSortOrder else { return }
+            guard case .distance = shopSortOrder else {
+                self.location = nil
+                return
+            }
             guard let location = locationManager.location else {
                 showLocationError = true
                 return
