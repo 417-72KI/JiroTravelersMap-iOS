@@ -5,17 +5,24 @@ struct SideMenuView: View {
     @EnvironmentObject private var sharedState: SharedState
 
     var body: some View {
-        VStack {
-            Toggle(isOn: $sharedState.displayOnlyOpeningShops) {
-                Text(R.string.menu.onlyOpen)
-                    .foregroundColor(.gray)
-                    .font(.headline)
+        ZStack {
+            Rectangle()
+                .fill(Color.white.opacity(0.6))
+                .blur(radius: 5)
+            VStack {
+                Toggle(isOn: $sharedState.displayOnlyOpeningShops) {
+                    Text(R.string.menu.onlyOpen)
+                        .foregroundColor(Color(UIColor.label))
+                        .font(.headline)
+                }
+                .padding(.top, 100)
+                Divider()
+                Spacer()
             }
-            .padding(.top, 100)
-            Spacer()
+            .padding()
         }
-        .padding()
-        .background(Color(red: 32 / 255, green: 32 / 255, blue: 32 / 255))
+        .compositingGroup()
+        .border(Color.gray, width: 1)
         .edgesIgnoringSafeArea(.all)
     }
 }

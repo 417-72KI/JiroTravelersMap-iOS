@@ -34,24 +34,22 @@ struct ShopListView: View {
                             }
                         },
                         label: {
-                            Image(systemName: "briefcase")
+                            Image(systemName: "ellipsis")
                                 .imageScale(.large)
                         })
                     )
                 }
                 .frame(width: geometry.size.width,
                        height: geometry.size.height)
-                    .offset(x: self.sharedState.showMenu ? -geometry.size.width / 2 : 0)
-                if self.sharedState.showMenu {
-                    HStack {
-                        Spacer()
-                        SideMenuView()
-                            .environmentObject(self.sharedState)
-                            .frame(width: geometry.size.width / 2,
-                                   alignment: .trailing)
-                    }
-                    .transition(.move(edge: .trailing))
+                HStack {
+                    Spacer()
+                    SideMenuView()
+                        .environmentObject(self.sharedState)
+                        .frame(width: geometry.size.width / 2,
+                               alignment: .trailing)
                 }
+                .transition(.move(edge: .trailing))
+                .offset(x: self.sharedState.showMenu ? 0 : geometry.size.width / 2)
             }
         }
     }
