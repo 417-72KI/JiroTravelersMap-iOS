@@ -17,13 +17,14 @@ struct SideMenuView: View {
                 }
                 .padding(.top, 100)
                 Divider()
-                SegmentedSelectionList(selection: $sharedState.shopSortOrder,
-                                       label: Text(R.string.menu.sortOrder)
-                                        .foregroundColor(Color(UIColor.label))
-                                        .font(.headline)) {
-                                            ForEach(Shop.SortOrder.allCases, id: \.self) {
-                                                Text($0.label)
-                                            }
+                SegmentedSelectionList(
+                    selection: $sharedState.shopSortOrder,
+                    label: Text(R.string.menu.sortOrder)
+                        .foregroundColor(Color(UIColor.label))
+                        .font(.headline)) {
+                            ForEach(Shop.SortOrder.allCases, id: \.self) {
+                                Text($0.label)
+                            }
                 }
                 Spacer()
             }
