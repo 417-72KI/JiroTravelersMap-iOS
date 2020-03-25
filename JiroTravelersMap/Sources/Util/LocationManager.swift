@@ -43,14 +43,3 @@ extension CLAuthorizationStatus {
         }
     }
 }
-
-// MARK: -
-extension Location {
-    init(_ location: CLLocation) {
-        self.init(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
-    }
-
-    var coordinate: CLLocationCoordinate2D { .init(latitude: lat, longitude: lng) }
-
-    func asCLLocation() -> CLLocation { .init(latitude: lat, longitude: lng) }
-}

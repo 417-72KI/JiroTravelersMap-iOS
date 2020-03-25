@@ -173,6 +173,24 @@ extension Shop.OpeningHours {
     }
 }
 
+// MARK: -
+extension Shop {
+    enum SortOrder {
+        case id
+        case distance
+    }
+}
+
+// MARK: -
+extension Sequence where Element == Shop {
+    func sorted(by order: Element.SortOrder, location: Location?) -> [Element] {
+        guard case .distance = order, let location = location else {
+            return sorted(by: \.id)
+        }
+        return sorted { $0.location.distance(from: location) < $1.location.distance(from: location) }
+    }
+}
+
 // MARK: - Mock
 #if DEBUG
 extension Shop {
