@@ -7,7 +7,7 @@ struct SideMenuView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.white.opacity(0.6))
+                .fill(Color(UIColor.tertiarySystemBackground).opacity(0.6))
                 .blur(radius: 5)
             VStack {
                 Toggle(isOn: $sharedState.displayOnlyOpeningShops) {
