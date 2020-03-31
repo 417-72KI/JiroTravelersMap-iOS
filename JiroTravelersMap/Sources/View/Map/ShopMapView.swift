@@ -17,7 +17,9 @@ struct ShopMapView: View {
                 MapView(annotations: shopList.map(ShopAnnotation.init),
                         selectedAnnotation: $selectedAnnotation) {
                             guard let annotation = $0 as? ShopAnnotation else { return }
-                            self.detailView = AnyView(ShopDetailView(shop: annotation.shop, shopList: self.shopList))
+                            self.detailView = ShopDetailView(shop: annotation.shop,
+                                                             shopList: self.shopList)
+                                .eraseToAnyView()
                             self.tag = showDetailTag
                 }
             }.navigationBarTitle(R.string.content.map, displayMode: .inline)
