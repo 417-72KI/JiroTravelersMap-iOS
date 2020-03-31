@@ -200,6 +200,13 @@ extension Sequence where Element == Shop {
         }
         return sorted { $0.location.distance(from: location) < $1.location.distance(from: location) }
     }
+
+    func prefix(maxLength: UInt) -> [Element] {
+        if case .max = maxLength {
+            return Array(self)
+        }
+        return Array(prefix(Int(maxLength)))
+    }
 }
 
 // MARK: - Mock

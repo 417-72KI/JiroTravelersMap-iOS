@@ -45,6 +45,7 @@ private extension ContentView {
         viewModel.shopList.lazy
             .filter { [sharedState] in sharedState.displayOnlyOpeningShops ? $0.isOpening(on: Date()) : true }
             .sorted(by: sharedState.shopSortOrder, location: sharedState.location)
+            .prefix(maxLength: self.sharedState.maxDisplayCount)
     }
 }
 

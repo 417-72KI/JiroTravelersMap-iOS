@@ -19,7 +19,12 @@ final class SharedState: ObservableObject {
         }
     }
     @Published var location: Location?
+    @Published var maxDisplayCount: UInt = .max
 
     private let locationManager = LocationManager()
     private var cancellables: Set<AnyCancellable> = []
+}
+
+extension SharedState {
+    static let displayCountCandidates: [UInt] = [5, 10, 20, .max]
 }

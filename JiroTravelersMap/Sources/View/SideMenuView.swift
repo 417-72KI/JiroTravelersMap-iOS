@@ -26,6 +26,18 @@ struct SideMenuView: View {
                                 Text($0.label)
                             }
                 }
+                Divider()
+                SegmentedSelectionList(
+                    selection: $sharedState.maxDisplayCount,
+                    label: Text(R.string.menu.displayCount)
+                        .foregroundColor(Color(UIColor.label))
+                        .font(.headline)) {
+                            ForEach(SharedState.displayCountCandidates, id: \.self) {
+                                $0 == .max
+                                    ? Text(R.string.menu.all)
+                                    : Text("\($0)")
+                            }
+                }
                 Spacer()
             }
             .padding()
