@@ -15,6 +15,11 @@ struct ShopListView: View {
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
+                if self.shopList.isEmpty {
+                    Text(R.string.localizable.noOpenStores)
+                        .frame(width: geometry.size.width,
+                               height: geometry.size.height)
+                }
                 VStack {
                     List(self.shopList) { shop in
                         NavigationLink(destination: ShopDetailView(shop: shop, shopList: self.shopList)) {
@@ -29,6 +34,10 @@ struct ShopListView: View {
                                 self.sharedState.location
                                     .flatMap(shop.location.distance)
                                     .flatMap { Text(String(format: "%.2f km", $0 / 1000)) }
+                            }.onTapGesture {
+                                withAnimation {
+                                    self.sharedState.showMenu = false
+                                }
                             }
                         }
                     }
